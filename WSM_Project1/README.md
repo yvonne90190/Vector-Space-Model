@@ -1,4 +1,7 @@
 # ****Vector Space Model****
+\\-  A retrieval program that is able to retrieve the relevant news to the given query from a set of 8,000 English News, and another program from 2,000 Chinese News.
+\\-  Using TF-IDF weighting schemes, cosine similarity metrics, Euclidean distance, and relevance feedback. 
+\\- Using NLP technique (stemming, remove stop word, Jeiba).
 # ***Directory Tree***
 ```
 ── WSM_Project1 
