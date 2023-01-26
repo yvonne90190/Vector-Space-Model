@@ -1,4 +1,4 @@
-# **** Vector Space Model ****
+# ****Vector Space Model****
 # ***Directory Tree***
 ```
 ── WSM_Project1 
