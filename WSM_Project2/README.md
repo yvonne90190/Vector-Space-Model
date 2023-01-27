@@ -61,19 +61,21 @@ Run all 50 queries and return at top 1,000 documents for each query. Do not retu
 
 *query-number Q0 document-id rank score Exp*
 
-where query-number is the number of the query (i.e., 401 to 450), document-id is the _external_ ID for the retrieved document, rank is the rank of the corresponding document in the returned ranked list (1 is the best and 1000 is the worst; break the ties either arbitrarily or lexicographically), and score is the score that my ranking function outputs for the document. Scores should descend while rank increases. "Q0" (Q zero) and "Exp" are constants that are used by some evaluation software. The overall file should be sorted by ascending rank (so descending score) within ascending query-number.
-
-Run all four retrieval models against the two WT2g indexes. This means 4 (models) * 2 (indexes) = 8 files, with at most 50,000 lines in total.
-
-To evaluate a single run (i.e. a single file containing 50,000 lines or less), first download the qrel file ([here](https://wm5.nccu.edu.tw/base/10001/course/10026264/content/proj02/qrels.401-450.txt) is the qrel file for the WT2g corpus. Then, use evaluation tool (ireval.jar) in Lemur Toolkit or download the script of [trec_eval.pl](https://wm5.nccu.edu.tw/base/10001/course/10026264/content/proj02/trec_eval.pl) and run:
-
-*perl trec_eval.pl [-q] qrel_file results_file*
-
-(The -q option outputs evaluation metrics values for each query; the average overall queries will be returned is -q is not used). trec_eval provides a number of statistics about how well the retrieval function corresponding to the results_file did on the corresponding queries) and includes average precision, precision at various recall cut-offs, and so on. I use some of those statistics for this project's report.
-
-## OKAPI TF-IDF on query 401
-I ran the okapi tf-idf model on query "401. foreign minorities, germany" for the WT2g collection (with stemming), without doing any fancy query processing (just word tokenization). Below is the statistics I got back by running trec-eval on the results for this query:
-
+where query-number is the number of the query (i.e., 401 to 450), document-id is the _external_ ID for the retrieved document, rank is the rank of the corresponding document in the returned ranked list (1 is the best and 1000 is the worst; break the ties either arbitrarily or lexicographically), and score is the score that my ranking function outputs for the document. Scores should descend while rank increases. "Q0" (Q zero) and "Exp" are constants that are used by some evaluation software. The overall file should be sorted by ascending rank (so descending score) within ascending query-number.  
+  
+Run all four retrieval models against the two WT2g indexes. This means 4 (models) * 2 (indexes) = 8 files, with at most 50,000 lines in total.  
+  
+To evaluate a single run (i.e. a single file containing 50,000 lines or less), first download the qrel file ([here](https://wm5.nccu.edu.tw/base/10001/course/10026264/content/proj02/qrels.401-450.txt) is the qrel file for the WT2g corpus. Then, use evaluation tool (ireval.jar) in Lemur Toolkit or download the script of [trec_eval.pl](https://wm5.nccu.edu.tw/base/10001/course/10026264/content/proj02/trec_eval.pl) and run:  
+  
+*perl trec_eval.pl [-q] qrel_file results_file*  
+  
+(The -q option outputs evaluation metrics values for each query; the average overall queries will be returned is -q is not used). trec_eval provides a number of statistics about how well the retrieval function corresponding to the results_file did on the corresponding queries) and includes average precision, precision at various recall cut-offs, and so on. I use some of those statistics for this project's report.  
+  
+## OKAPI TF-IDF on query 401  
+I ran the okapi tf-idf model on query "401. foreign minorities, germany" for the WT2g collection (with stemming), without doing any fancy query processing (just word tokenization).  
+  
+Below is the statistics I got back by running trec-eval on the results for this query:  
+```
 Queryid (Num):      401
 Total number of documents over all queries
     Retrieved:     1000
@@ -105,7 +107,7 @@ Precision:
   At 1000 docs:   0.0420
 R-Precision (precision after R (= num_rel for a query) docs retrieved):
     Exact:        0.3111
-
+```
 ## Paper Report
 [ _WSM_Project2.pdf_](https://www.dropbox.com/s/1kscu4zbpo8zp54/WSM_Project2.pdf?dl=0) provide a short description of what I did and some analysis of what you learned. You should including :  
 1. Un-interpolated mean average precision numbers for all 8 runs.
