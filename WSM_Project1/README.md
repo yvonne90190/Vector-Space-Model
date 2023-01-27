@@ -28,7 +28,7 @@
         └── cn_stopwords.txt
 ```
 
-# Usage
+## Usage
 (1) Please put corpus file under directory *"dataSets"*. For example, put *"ChineseNews"* under "dataSets"
 (2) Go to directory *"codes"*
 ```
@@ -117,7 +117,7 @@ News796.txt     0.2548435823460667
 News447.txt     0.2356408013065766
 News2050.txt    0.22390969982680858
 ```
-## (Q3)Vector Space Model with Different Scheme & Similarity Metrics in Chinese and English
+### (Q3)Vector Space Model with Different Scheme & Similarity Metrics in Chinese and English
 In this part, I retrieve the relevant news to the query from a set of 2,000 Chinese News collected from chinatimes.com and setn.com according to different weighting schemes (TF and TF-IDF) and cosine similarity metric.
 I use Jieba or to split the Chinese word segments.
 
@@ -142,7 +142,7 @@ News200056.txt  0.12475501236352618
 News200081.txt  0.12214259781822105
 News200071.txt  0.12099087277644432 
 ```
-## (Q4) Evaluation IR system
+### (Q4) Evaluation IR system
 In this part, I focus another [smaller dataset](https://wm5.nccu.edu.tw/base/10001/course/10026264/content/proj01/smaller_dataset.zip), which have 1460 documents, 76 queries and their labelled relevant documents.  
 I implement the following metrics on this dataset: Recall@10, MAP@10, MRR@10, by using vector space model and trying some NLP technique e.g. stemming, remove stop word.  
   
