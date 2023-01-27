@@ -54,3 +54,61 @@ Note: If you use multinomial model, for every document, only the probabilities a
     where P is the estimated probability from document $$(max likelihood = m_i/n)$$ and Q is the estimated probability from corpus (background probability = cf / terms in the corpus).
 
 4. Improve one of the above three IR models. Improve the rank quality of the chosen IR models, and explain and showcase why my modifications can work in my report [ _WSM_Project2.pdf_](https://www.dropbox.com/s/1kscu4zbpo8zp54/WSM_Project2.pdf?dl=0)
+
+
+## Evaluation
+Run all 50 queries and return at top 1,000 documents for each query. Do not return documents with score equal to zero. If there are only N<1000 documents with non-zero scores then only return these N documents. Save the 50 ranked lists of documents in a single file. Each file should contain at most 50*1000 = 50,000 lines in it. Each line in the file must have the following format:
+
+*query-number Q0 document-id rank score Exp*
+
+where query-number is the number of the query (i.e., 401 to 450), document-id is the _external_ ID for the retrieved document, rank is the rank of the corresponding document in the returned ranked list (1 is the best and 1000 is the worst; break the ties either arbitrarily or lexicographically), and score is the score that my ranking function outputs for the document. Scores should descend while rank increases. "Q0" (Q zero) and "Exp" are constants that are used by some evaluation software. The overall file should be sorted by ascending rank (so descending score) within ascending query-number.
+
+Run all four retrieval models against the two WT2g indexes. This means 4 (models) * 2 (indexes) = 8 files, with at most 50,000 lines in total.
+
+To evaluate a single run (i.e. a single file containing 50,000 lines or less), first download the qrel file ([here](https://wm5.nccu.edu.tw/base/10001/course/10026264/content/proj02/qrels.401-450.txt) is the qrel file for the WT2g corpus. Then, use evaluation tool (ireval.jar) in Lemur Toolkit or download the script of [trec_eval.pl](https://wm5.nccu.edu.tw/base/10001/course/10026264/content/proj02/trec_eval.pl) and run:
+
+*perl trec_eval.pl [-q] qrel_file results_file*
+
+(The -q option outputs evaluation metrics values for each query; the average overall queries will be returned is -q is not used). trec_eval provides a number of statistics about how well the retrieval function corresponding to the results_file did on the corresponding queries) and includes average precision, precision at various recall cut-offs, and so on. I use some of those statistics for this project's report.
+
+## OKAPI TF-IDF on query 401
+I ran the okapi tf-idf model on query "401. foreign minorities, germany" for the WT2g collection (with stemming), without doing any fancy query processing (just word tokenization). Below is the statistics I got back by running trec-eval on the results for this query:
+
+Queryid (Num):      401
+Total number of documents over all queries
+    Retrieved:     1000
+    Relevant:        45
+    Rel_ret:         42
+Interpolated Recall - Precision Averages:
+    at 0.00       1.0000
+    at 0.10       0.4375
+    at 0.20       0.3250
+    at 0.30       0.3182
+    at 0.40       0.2769
+    at 0.50       0.2604
+    at 0.60       0.2366
+    at 0.70       0.2361
+    at 0.80       0.2209
+    at 0.90       0.0586
+    at 1.00       0.0000
+Average precision (non-interpolated) for all rel docs(averaged over queries)
+                  0.2605
+Precision:
+  At    5 docs:   0.4000
+  At   10 docs:   0.4000
+  At   15 docs:   0.4000
+  At   20 docs:   0.3500
+  At   30 docs:   0.3000
+  At  100 docs:   0.2500
+  At  200 docs:   0.1850
+  At  500 docs:   0.0800
+  At 1000 docs:   0.0420
+R-Precision (precision after R (= num_rel for a query) docs retrieved):
+    Exact:        0.3111
+
+Paper Report
+[ _WSM_Project2.pdf_](https://www.dropbox.com/s/1kscu4zbpo8zp54/WSM_Project2.pdf?dl=0)
+Provide a short description of what I did and some analysis of what you learned. You should including : 
+1. Un-interpolated mean average precision numbers for all 8 runs.
+2. Precision at rank 10 documents for all 8 runs.
+3. An analysis of the advantages or disadvantages of stemming, IDF, and the different smoothing techniques.
