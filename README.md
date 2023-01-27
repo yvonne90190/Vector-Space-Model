@@ -1,6 +1,6 @@
 # WSM_Projects
-In the first project, I build a Vector Space Model with Python language for searching products.  
-In the second project, I process big corpus by using existing tools.  
-In the this final project, I also use many open source tools for tackling the competition with ease.  
+In the Project1, I build a Vector Space Model with Python language for searching products.  
+In the Project2, I process big corpus by using existing tools - Indri.  
+In the Project3, I use many open source tools for tackling the OTTO e-commerce recommendation competition with ease.  
   
 See more details in above directory !
