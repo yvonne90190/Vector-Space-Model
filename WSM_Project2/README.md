@@ -28,12 +28,12 @@ For the corpus, I construct two indexes, (a) with stemming, and (b) without stem
 [Here](https://wm5.nccu.edu.tw/base/10001/course/10026264/content/proj02/topics.401-450.txt) is a set of 50 TREC queries for the corpus, with the standard TREC format having topic title, description and narrative. Documents from the corpus have been judged with respect to their relevance to these queries by NIST assessors.
 
 ## Ranking Functions
-The task is to run the set of queries against the WT2g collection, return a ranked list of documents (the top 1000) in a particular format, and the evaluate the ranked lists.  
+The task is to run the set of queries against the WT2g collection, return a ranked list of documents (the top 1000) in a particular format, and then evaluate the ranked lists.  
   
 Implement the following variations of a retrieval system:  
 
 1. Vector space model, terms weighted by Okapi TF (see note) times an IDF value, and inner product similarity between vectors.  
-Note: I use for the weights OKAPI TF x IDF where OKAPI TF = tf/(tf + 0.5 + 1.5 * doclen / avgdoclen). For queries, Okapi TF can also be computed in the same way, just use the length of the query to replace doclen.  
+Note: I use the weights for OKAPI TF x IDF where OKAPI TF = tf/(tf + 0.5 + 1.5 * doclen / avgdoclen). For queries, Okapi TF can also be computed in the same way, just use the length of the query to replace doclen.  
   
      Also note that the definition of OKAPI TF is tf / tf + k1((1 - b) + b * doclen / avgdoclen). In the above formula, I set k1 = 2 and b = 0.75, to end up with: tf / (tf + 0.5 + 1.5 * doclen / avgdoclen).  
   
