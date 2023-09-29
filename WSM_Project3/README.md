@@ -11,7 +11,7 @@ Our team implement following retrieval models:
 1) Vector Space Model (VSM)
 2) Word2Vec Model
 3) XGBranker
-We also ensemble the models to get a higher score. (See details [here](...))
+We also ensemble the models to get a higher score.
 
 I also try to implement Language Modeling(LM), BM25, JM-smoothing, and  adopt some Machine Learning toolkits to learn the judgement during the process using scikit-learn. 
 
