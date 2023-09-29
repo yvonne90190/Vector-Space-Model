@@ -1,9 +1,12 @@
 # **WSM Project 2: Building IR systems based on the Lemur Project**
 
-In this project I implement several different retrieval methods, i.e. algorithms that given a user's request (query) and a corpus of documents assign a score to each document according to its relevance to the query. Some of these retrieval methods will be the implementation of the basic retrieval models studied in the class (e.g. TF-IDF, BM25, Language Models with different Smoothing). I use the toolkits of Lemur Project, which includes search engines, browser toolbars, text analysis tools, and data resources that support research and development of information retrieval and text mining. I heavily read its wiki, [Lemur Project](http://www.lemurproject.org/) and [Indri Search Engine Wiki](http://sourceforge.net/p/lemur/wiki/Home/), in order to understand how to use the toolkits.  
+In this project I implement several different retrieval methods, (e.g. TF-IDF, BM25, Language Models with different Smoothing).
+by use thing toolkits of [Lemur Project](http://www.lemurproject.org/) and [Indri Search Engine](http://sourceforge.net/p/lemur/wiki/Home/)
+
+i.e. algorithms that given a user's request (query) and a corpus of documents assign a score to each document according to its relevance to the query. 
 
 ## Document Corpus  
-Use WT2g, a 2GB corpus of Web documents to test my algorithms, and run my experiments. ([Here](http://ir.dcs.gla.ac.uk/test_collections/wt10g.html) are details about the corpus (WT10g instead), in case you are interested.) 
+Use WT2g, a 2GB corpus of Web documents to test my algorithms, and run my experiments. ([Here](http://ir.dcs.gla.ac.uk/test_collections/wt10g.html) are details about the corpus (WT10g instead)) 
 
 For the corpus, I construct two indexes, (a) with stemming, and (b) without stemming. Both indexes contain stopwords. For stemming, I can use the porter (Porter) stemmer. Below is an example of index information:
 <table>
@@ -29,49 +32,45 @@ For the corpus, I construct two indexes, (a) with stemming, and (b) without stem
 
 ## Ranking Functions
 The task is to run the set of queries against the WT2g collection, return a ranked list of documents (the top 1000) in a particular format, and then evaluate the ranked lists.  
-  
-Implement the following variations of a retrieval system:  
 
-1. Vector space model, terms weighted by Okapi TF (see note) times an IDF value, and inner product similarity between vectors.  
-Note: I use the weights for OKAPI TF x IDF where OKAPI TF = tf/(tf + 0.5 + 1.5 * doclen / avgdoclen). For queries, Okapi TF can also be computed in the same way, just use the length of the query to replace doclen.  
+1. Vector space model, terms weighted by OKAPI TF x IDF, and inner product similarity between vectors.  
+Note I set :
+- OKAPI TF = tf / tf + k1((1 - b) + b * doclen / avgdoclen) for documents.
+- OKAPI TF = tf / tf + k1((1 - b) + b * doclen / avgdoclen) for queries.
+- And set k1 = 2 and b = 0.75, ending up with: tf / (tf + 0.5 + 1.5 * doclen / avgdoclen).  
   
-     Also note that the definition of OKAPI TF is tf / tf + k1((1 - b) + b * doclen / avgdoclen). In the above formula, I set k1 = 2 and b = 0.75, to end up with: tf / (tf + 0.5 + 1.5 * doclen / avgdoclen).  
-  
-2. Language modeling, maximum likelihood estimates with Laplace smoothing only, query likelihood.  
-Note: If you use multinomial model, for every document, only the probabilities associated with terms in the query must be estimated because the others are missing from the query-likelihood formula (please refer to our slides).  
+3. Language modeling, maximum likelihood estimates with Laplace smoothing only, query likelihood.  
+Note: As I use multinomial model, for every document, only the probabilities associated with terms in the query must be estimated because the others are missing from the query-likelihood formula.  
 
-    For model estimation use maximum-likelihood and Laplace smoothing. Use formula (for term i)  
+    Formula (for term i):
     $$p_i = {m_i+1 \over n+k}$$
-  
     where m = term frequency, n=number of terms in document (doc length) , k=number of unique terms in corpus.  
 
-3. Language modeling, Jelinek-Mercer smoothing using the corpus, 0.8 of the weight attached to the background probability, query likelihood.  
+5. Language modeling, Jelinek-Mercer smoothing using the corpus, 0.8 of the weight attached to the background probability, query likelihood.  
   
-    The formula for Jelinek-Mercer smoothing is,  
- 
+    Formula:  
     $$p_i = {\lambda P + (1-\lambda) Q}$$
-
     where P is the estimated probability from document $$(max likelihood = m_i/n)$$ and Q is the estimated probability from corpus (background probability = cf / terms in the corpus).
 
-4. Improve one of the above three IR models. Improve the rank quality of the chosen IR models, and explain and showcase why my modifications can work in my report [ _WSM_Project2.pdf_](https://www.dropbox.com/s/1kscu4zbpo8zp54/WSM_Project2.pdf?dl=0)
+6. Improve one of the above three IR models. Improve the rank quality of the chosen IR models, and explain and showcase why my modifications can work in my report [ _WSM_Project2.pdf_](https://www.dropbox.com/s/1kscu4zbpo8zp54/WSM_Project2.pdf?dl=0)
 
 
 ## Evaluation
-Run all 50 queries and return at top 1,000 documents for each query. Do not return documents with score equal to zero. If there are only N<1000 documents with non-zero scores then only return these N documents. Save the 50 ranked lists of documents in a single file. Each file should contain at most 50*1000 = 50,000 lines in it. Each line in the file must have the following format:
+Run all 50 queries and return at top 1,000 documents for each query, except scores that equal to zero. If there are only N<1000 documents with non-zero scores then only return these N documents.
 
+Save the 50 ranked lists of documents in a single file. Each line in the file having the following format:
 *query-number Q0 document-id rank score Exp*
-
 where query-number is the number of the query (i.e., 401 to 450), document-id is the _external_ ID for the retrieved document, rank is the rank of the corresponding document in the returned ranked list (1 is the best and 1000 is the worst; break the ties either arbitrarily or lexicographically), and score is the score that my ranking function outputs for the document. Scores should descend while rank increases. "Q0" (Q zero) and "Exp" are constants that are used by some evaluation software. The overall file should be sorted by ascending rank (so descending score) within ascending query-number.  
-  
-Run all four retrieval models against the two WT2g indexes. This means 4 (models) * 2 (indexes) = 8 files, with at most 50,000 lines in total.  
   
 To evaluate a single run (i.e. a single file containing 50,000 lines or less), first download the qrel file ([here](https://wm5.nccu.edu.tw/base/10001/course/10026264/content/proj02/qrels.401-450.txt) is the qrel file for the WT2g corpus. Then, use evaluation tool (ireval.jar) in Lemur Toolkit or download the script of [trec_eval.pl](https://wm5.nccu.edu.tw/base/10001/course/10026264/content/proj02/trec_eval.pl) and run:  
   
 *perl trec_eval.pl [-q] qrel_file results_file*  
   
-(The -q option outputs evaluation metrics values for each query; the average overall queries will be returned is -q is not used). trec_eval provides a number of statistics about how well the retrieval function corresponding to the results_file did on the corresponding queries) and includes average precision, precision at various recall cut-offs, and so on. I use some of those statistics for this project's report.  
+(The -q option outputs evaluation metrics values for each query; the average overall queries will be returned if -q is not used). 
+
+trec_eval provides a number of statistics about how well the retrieval function corresponding to the results_file did on the corresponding queries and includes average precision, precision at various recall cut-offs. I use some of those statistics for this project's report.  
   
-## OKAPI TF-IDF on query 401  
+## EXAMPLE  
 I ran the okapi tf-idf model on query "401. foreign minorities, germany" for the WT2g collection (with stemming), without doing any fancy query processing (just word tokenization).  
   
 Below is the statistics I got back by running trec-eval on the results for this query:  
