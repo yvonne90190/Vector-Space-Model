@@ -51,7 +51,7 @@ python3 main_Evaluation.py
 
 
 ## Description
-### Q1 : Vector Space Model with Different Weighting Schemes & Similarity Metrics (Please DON'T use any off-the-shelf packages or functions)
+### Q1 : Vector Space Model with Different Weighting Schemes & Similarity Metrics (no off-the-shelf packages or functions)
 Rank the Documents according to the Similarity scores.  
 
 I develop a retrieval program that is able to retrieve the relevant news to the given query from a set of 8,000 English News collected from reuters.com according to different weighting schemes and similarity metrics. In the given dataset, each file is named by its News ID and contains the corresponding news title and content, as shown in below:  
