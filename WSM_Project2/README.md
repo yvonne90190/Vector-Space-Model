@@ -108,7 +108,7 @@ R-Precision (precision after R (= num_rel for a query) docs retrieved):
     Exact:        0.3111
 ```
 ## Paper Report
-[ _WSM_Project2.pdf_](https://www.dropbox.com/s/1kscu4zbpo8zp54/WSM_Project2.pdf?dl=0) provide a short description of what I did and some analysis of what you learned. You should including :  
+[ _WSM_Project2.pdf_](https://www.dropbox.com/s/1kscu4zbpo8zp54/WSM_Project2.pdf?dl=0) provide a short description of what I did and some analysis of what you learned. Including :  
 1. Un-interpolated mean average precision numbers for all 8 runs.
 2. Precision at rank 10 documents for all 8 runs.
 3. An analysis of the advantages or disadvantages of stemming, IDF, and the different smoothing techniques.
